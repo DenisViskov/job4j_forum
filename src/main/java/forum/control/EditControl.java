@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * @author Денис Висков
@@ -26,30 +27,16 @@ public class EditControl {
         this.service = service;
     }
 
-    @GetMapping(value = {"/edit/{numberID}", "/edit"})
-    public String edit(@PathVariable(value = "numberID", required = false) String id, Model model) {
-        service.findById(Integer.valueOf(id))
-                .ifPresent(post -> model.addAttribute("post", post));
+    @GetMapping(value = {"/edit/*", "/edit"})
+    public String edit() {
         return "edit";
     }
 
     @PostMapping("/createPost")
     public String createPost(@RequestParam("name") String name,
                              @RequestParam("description") String desc,
-                             Model model) {
-        Post post = (Post) model.getAttribute("post");
-        if (post != null) {
-            post.setName(name);
-            post.setDesc(desc);
-            service.update(post);
-        } else {
-            post = Post.of(name);
-            post.setDesc(desc);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(new Date());
-            post.setCreated(calendar);
-            service.add(post);
-        }
+                             @RequestParam(name = "id", required = false) Optional<Integer> boxID) {
+        boxID.ifPresent(id -> service.update(new Post(id, name, desc, Calendar.getInstance())));
         return "redirect:/";
     }
 }

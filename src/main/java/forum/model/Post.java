@@ -14,6 +14,16 @@ public class Post {
     private String desc;
     private Calendar created;
 
+    public Post() {
+    }
+
+    public Post(int id, String name, String desc, Calendar created) {
+        this.id = id;
+        this.name = name;
+        this.desc = desc;
+        this.created = created;
+    }
+
     public static Post of(String name) {
         Post post = new Post();
         post.name = name;
