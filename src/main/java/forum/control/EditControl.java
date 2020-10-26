@@ -27,8 +27,14 @@ public class EditControl {
         this.service = service;
     }
 
-    @GetMapping(value = {"/edit/*", "/edit"})
+    @GetMapping("/edit")
     public String edit() {
+        return "edit";
+    }
+
+    @GetMapping("/update")
+    public String edit(@RequestParam("id") int id, Model model) {
+        model.addAttribute("id", id);
         return "edit";
     }
 
