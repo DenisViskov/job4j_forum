@@ -41,4 +41,10 @@ public class PostService implements RepositoryService<Post> {
     public List<Post> findAll() {
         return store.findAll();
     }
+
+    @Override
+    public void update(Post some) {
+        List<Post> all = findAll();
+        all.set(some.getId() - 1, some);
+    }
 }

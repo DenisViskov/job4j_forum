@@ -16,4 +16,6 @@ public interface RepositoryService<V> {
     Optional<V> findById(int id);
 
     List<V> findAll();
+
+    void update(V some);
 }

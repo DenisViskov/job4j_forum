@@ -41,4 +41,10 @@ public class UserService implements RepositoryService<User> {
     public List<User> findAll() {
         return store.findAll();
     }
+
+    @Override
+    public void update(User some) {
+        List<User> all = store.findAll();
+        all.set(some.getId() - 1, some);
+    }
 }

@@ -30,7 +30,7 @@
     </style>
 </head>
 <body class="container">
-<form>
+<form action="/createPost" method="post">
     <div class="form-group">
         <label for="name">Name</label>
         <input type="text" class="form-control" name="name" id="name" placeholder="some name">

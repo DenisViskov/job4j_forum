@@ -8,6 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * @author Денис Висков
  * @version 1.0
@@ -22,17 +26,30 @@ public class EditControl {
         this.service = service;
     }
 
-    @GetMapping({"/edit?id={id}", "/edit"})
-    public String edit(@PathVariable(value = "id", required = false) int id, Model model) {
-        model.addAttribute("post", service.findById(id).get());
+    @GetMapping(value = {"/edit?id={numberID}", "/edit"})
+    public String edit(@PathVariable(value = "numberID", required = false) String id, Model model) {
+        service.findById(Integer.valueOf(id))
+                .ifPresent(post -> model.addAttribute("post", post));
         return "edit";
     }
 
-    @PostMapping("/create")
-    public String create(@RequestParam("name") String name,
-                         @RequestParam("description") String desc,
-                         Model model) {
+    @PostMapping("/createPost")
+    public String createPost(@RequestParam("name") String name,
+                             @RequestParam("description") String desc,
+                             Model model) {
         Post post = (Post) model.getAttribute("post");
-        post.setName(name);
+        if (post != null) {
+            post.setName(name);
+            post.setDesc(desc);
+            service.update(post);
+        } else {
+            post = Post.of(name);
+            post.setDesc(desc);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(new Date());
+            post.setCreated(calendar);
+            service.add(post);
+        }
+        return "redirect:/";
     }
 }
