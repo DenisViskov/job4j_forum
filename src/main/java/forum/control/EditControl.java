@@ -26,7 +26,7 @@ public class EditControl {
         this.service = service;
     }
 
-    @GetMapping(value = {"/edit?id={numberID}", "/edit"})
+    @GetMapping(value = {"/edit/{numberID}", "/edit"})
     public String edit(@PathVariable(value = "numberID", required = false) String id, Model model) {
         service.findById(Integer.valueOf(id))
                 .ifPresent(post -> model.addAttribute("post", post));
