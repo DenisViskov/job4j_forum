@@ -25,6 +25,7 @@ public class UserService implements RepositoryService<User> {
 
     @Override
     public User add(User some) {
+        some.setId(store.findAll().size());
         return (User) store.add(some);
     }
 
