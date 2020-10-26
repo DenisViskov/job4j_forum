@@ -42,7 +42,17 @@ public class EditControl {
     public String createPost(@RequestParam("name") String name,
                              @RequestParam("description") String desc,
                              @RequestParam(name = "id", required = false) Optional<Integer> boxID) {
-        boxID.ifPresent(id -> service.update(new Post(id, name, desc, Calendar.getInstance())));
+        boxID.ifPresentOrElse(id -> {
+            Post post = (Post) service.findById(id).get();
+            post.setDesc(desc);
+            post.setName(name);
+            service.update(post);
+        }, () -> {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(new Date());
+            Post post = new Post(0, name, desc, calendar);
+            service.add(post);
+        });
         return "redirect:/";
     }
 }
