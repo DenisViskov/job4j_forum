@@ -1,6 +1,6 @@
 package forum.service;
 
-import forum.model.Post;
+import forum.model.User;
 import forum.persistance.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,30 +15,29 @@ import java.util.Optional;
  * @since 26.10.2020
  */
 @Service
-public class PostService implements RepositoryService<Post> {
+public class UserService implements RepositoryService<User> {
     private final Store store;
 
     @Autowired
-    public PostService(@Qualifier("postStorage") Store store) {
+    public UserService(@Qualifier("userStorage") Store store) {
         this.store = store;
-        store.add(Post.of("Sale car lada"));
     }
 
     @Override
-    public Post add(Post some) {
-        return (Post) store.add(some);
+    public User add(User some) {
+        return (User) store.add(some);
     }
 
     @Override
-    public Optional<Post> findById(int id) {
-        List<Post> posts = store.findAll();
-        return posts.stream()
-                .filter(post -> post.getId() == id)
+    public Optional<User> findById(int id) {
+        List<User> users = store.findAll();
+        return users.stream()
+                .filter(user -> user.getId() == id)
                 .findFirst();
     }
 
     @Override
-    public List<Post> findAll() {
+    public List<User> findAll() {
         return store.findAll();
     }
 }
