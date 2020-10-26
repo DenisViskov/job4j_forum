@@ -17,6 +17,7 @@ import java.util.Optional;
 @Service
 public class PostService implements RepositoryService<Post> {
     private final Store store;
+    private int id;
 
     @Autowired
     public PostService(@Qualifier("postStorage") Store store) {
@@ -26,6 +27,7 @@ public class PostService implements RepositoryService<Post> {
 
     @Override
     public Post add(Post some) {
+        some.setId(id++);
         return (Post) store.add(some);
     }
 
@@ -45,6 +47,6 @@ public class PostService implements RepositoryService<Post> {
     @Override
     public void update(Post some) {
         List<Post> all = findAll();
-        all.set(some.getId() - 1, some);
+        all.set(some.getId(), some);
     }
 }

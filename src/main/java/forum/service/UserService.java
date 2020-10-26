@@ -17,6 +17,7 @@ import java.util.Optional;
 @Service
 public class UserService implements RepositoryService<User> {
     private final Store store;
+    private int id;
 
     @Autowired
     public UserService(@Qualifier("userStorage") Store store) {
@@ -25,7 +26,7 @@ public class UserService implements RepositoryService<User> {
 
     @Override
     public User add(User some) {
-        some.setId(store.findAll().size());
+        some.setId(id++);
         return (User) store.add(some);
     }
 
@@ -45,6 +46,6 @@ public class UserService implements RepositoryService<User> {
     @Override
     public void update(User some) {
         List<User> all = store.findAll();
-        all.set(some.getId() - 1, some);
+        all.set(some.getId(), some);
     }
 }
