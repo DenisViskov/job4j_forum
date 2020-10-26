@@ -25,7 +25,7 @@ public class EditControl {
         return "edit";
     }
 
-    @PostMapping("/create")
+    @PostMapping({"/create?id={id}", "/create"})
     public String create(@PathVariable(value = "id", required = false)
                          @RequestParam("name") String name,
                          @RequestParam("description") String desc) {
