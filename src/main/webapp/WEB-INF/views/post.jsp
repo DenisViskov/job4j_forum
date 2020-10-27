@@ -32,15 +32,49 @@
         <th scope="col">date</th>
     </tr>
     </thead>
-    <tbody>
-        <tr>
-            <td><c:out value="${post.id}"/></td>
-            <td><c:out value="${post.name}"/></td>
-            <td><c:out value="${post.description}"/></td>
-            <td><c:out value="${post.created}"/></td>
-        </tr>
+    <tbody id="tbody">
+    <tr>
+        <td><c:out value="${post.id}"/></td>
+        <td><c:out value="${post.name}"/></td>
+        <td><c:out value="${post.desc}"/></td>
+        <td><c:out value="${post.created}"/></td>
+    </tr>
     </tbody>
 </table>
+<form id="form">
+    <div class="form-group">
+        <label for="comment">Your comment</label>
+        <textarea class="form-control" id="comment" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 </body>
 </html>
 
+<script>
+    $("#form").submit(function (e) {
+        e.preventDefault()
+        addComment()
+    })
+
+    function addComment() {
+        const message = document.getElementById('comment').value
+        let tbody = document.getElementById('tbody')
+        if (message != '') {
+            let tr = document.createElement('tr')
+            let id = document.createElement('td')
+            let name = document.createElement('td')
+            let description = document.createElement('td')
+            let date = document.createElement('td')
+            id.innerText = ''
+            name.innerText = ''
+            description.innerText = message
+            date.innerText = ''
+            tr.appendChild(id)
+            tr.appendChild(name)
+            tr.appendChild(description)
+            tr.appendChild(date)
+            tbody.appendChild(tr)
+        }
+    }
+</script>
