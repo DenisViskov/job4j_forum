@@ -37,7 +37,7 @@
         <td><c:out value="${post.id}"/></td>
         <td><c:out value="${post.name}"/></td>
         <td><c:out value="${post.desc}"/></td>
-        <td><c:out value="${post.created}"/></td>
+        <td><c:out value="${post.created.getTime()}"/></td>
     </tr>
     </tbody>
 </table>

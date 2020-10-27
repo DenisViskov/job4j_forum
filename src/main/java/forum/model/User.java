@@ -1,5 +1,6 @@
 package forum.model;
 
+import javax.persistence.*;
 import java.util.Objects;
 
 /**
@@ -7,9 +8,15 @@ import java.util.Objects;
  * @version 1.0
  * @since 26.10.2020
  */
+@Entity
+@Table(name = "usr")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "password")
     private String password;
 
     public User(int id, String name, String password) {

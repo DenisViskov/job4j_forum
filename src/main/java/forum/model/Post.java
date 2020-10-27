@@ -1,5 +1,8 @@
 package forum.model;
 
+import org.hibernate.annotations.GeneratorType;
+
+import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Objects;
 
@@ -8,10 +11,17 @@ import java.util.Objects;
  * @version 1.0
  * @since 26.10.2020
  */
+@Entity
+@Table(name = "posts")
 public class Post {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "description")
     private String desc;
+    @Column(name = "created")
     private Calendar created;
 
     public Post() {

@@ -2,10 +2,12 @@ package forum.service;
 
 import forum.model.User;
 import forum.persistance.Store;
+import forum.persistance.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,19 +18,19 @@ import java.util.List;
  */
 @Service
 public class LoginService implements Login<User> {
-    private final Store store;
+    private final UserRepository store;
 
     @Autowired
-    public LoginService(@Qualifier("userStorage") Store store) {
+    public LoginService(UserRepository store) {
         this.store = store;
     }
 
     @Override
     public boolean validate(User some) {
-        List<User> users = store.findAll();
+        List<User> users = new ArrayList<>();
+        store.findAll().forEach(users::add);
         return users.stream()
                 .anyMatch(user -> user.getName().equals(some.getName())
                         && user.getPassword().equals(some.getPassword()));
     }
-
 }

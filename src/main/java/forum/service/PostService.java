@@ -1,11 +1,13 @@
 package forum.service;
 
 import forum.model.Post;
+import forum.persistance.PostRepository;
 import forum.persistance.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,37 +18,32 @@ import java.util.Optional;
  */
 @Service
 public class PostService implements RepositoryService<Post> {
-    private final Store store;
-    private int id;
+    private final PostRepository store;
 
     @Autowired
-    public PostService(@Qualifier("postStorage") Store store) {
+    public PostService(PostRepository store) {
         this.store = store;
-        store.add(Post.of("Sale car lada"));
     }
 
     @Override
     public Post add(Post some) {
-        some.setId(id++);
-        return (Post) store.add(some);
+        return (Post) store.save(some);
     }
 
     @Override
     public Optional<Post> findById(int id) {
-        List<Post> posts = store.findAll();
-        return posts.stream()
-                .filter(post -> post.getId() == id)
-                .findFirst();
+        return store.findById(id);
     }
 
     @Override
     public List<Post> findAll() {
-        return store.findAll();
+        List<Post> rsl = new ArrayList<>();
+        store.findAll().forEach(rsl::add);
+        return rsl;
     }
 
     @Override
     public void update(Post some) {
-        List<Post> all = findAll();
-        all.set(some.getId(), some);
+        store.save(some);
     }
 }
