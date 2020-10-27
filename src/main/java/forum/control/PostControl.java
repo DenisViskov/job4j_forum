@@ -1,30 +1,32 @@
 package forum.control;
 
+import forum.model.Post;
 import forum.service.RepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author Денис Висков
  * @version 1.0
- * @since 26.10.2020
+ * @since 27.10.2020
  */
 @Controller
-public class IndexControl {
-
+public class PostControl {
     private final RepositoryService service;
 
     @Autowired
-    public IndexControl(@Qualifier("postService") RepositoryService service) {
+    public PostControl(@Qualifier("postService") RepositoryService service) {
         this.service = service;
     }
 
-    @GetMapping({"/", "/index"})
-    public String index(Model model) {
-        model.addAttribute("posts", service.findAll());
-        return "index";
+    @GetMapping("/post")
+    public String post(@RequestParam("id") int id, Model model) {
+        Post post = (Post) service.findById(id).get();
+        model.addAttribute("post", post);
+        return "post";
     }
 }
