@@ -2,10 +2,12 @@ package forum.service;
 
 import forum.model.User;
 import forum.persistance.Store;
+import forum.persistance.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,36 +18,32 @@ import java.util.Optional;
  */
 @Service
 public class UserService implements RepositoryService<User> {
-    private final Store store;
-    private int id;
+    private final UserRepository store;
 
     @Autowired
-    public UserService(@Qualifier("userStorage") Store store) {
+    public UserService(UserRepository store) {
         this.store = store;
     }
 
     @Override
     public User add(User some) {
-        some.setId(id++);
-        return (User) store.add(some);
+        return (User) store.save(some);
     }
 
     @Override
     public Optional<User> findById(int id) {
-        List<User> users = store.findAll();
-        return users.stream()
-                .filter(user -> user.getId() == id)
-                .findFirst();
+        return store.findById(id);
     }
 
     @Override
     public List<User> findAll() {
-        return store.findAll();
+        List<User> rsl = new ArrayList<>();
+        store.findAll().forEach(rsl::add);
+        return rsl;
     }
 
     @Override
     public void update(User some) {
-        List<User> all = store.findAll();
-        all.set(some.getId(), some);
+        store.save(some);
     }
 }
