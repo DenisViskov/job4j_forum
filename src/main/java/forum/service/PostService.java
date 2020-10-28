@@ -2,9 +2,7 @@ package forum.service;
 
 import forum.model.Post;
 import forum.persistance.PostRepository;
-import forum.persistance.Store;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

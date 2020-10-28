@@ -1,6 +1,6 @@
 package forum.persistance;
 
-import forum.model.User;
+import forum.model.Role;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -8,8 +8,7 @@ import org.springframework.data.repository.CrudRepository;
  *
  * @author Денис Висков
  * @version 1.0
- * @since 27.10.2020
+ * @since 28.10.2020
  */
-public interface UserRepository extends CrudRepository<User, Integer> {
-    User findByName(String name);
+public interface RoleRepository extends CrudRepository<Role, Integer> {
 }

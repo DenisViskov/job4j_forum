@@ -5,6 +5,7 @@ import forum.service.RepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -22,14 +23,13 @@ public class RegControl {
     }
 
     @GetMapping("/reg")
-    public String reg() {
+    public String reg(Model model) {
         return "reg";
     }
 
     @PostMapping("/createUser")
-    public String createUser(@RequestParam("name") String name,
-                             @RequestParam("password") String password) {
-        service.add(new User(0, name, password));
+    public String createUser(@ModelAttribute User user) {
+        service.add(user);
         return "redirect:/";
     }
 }

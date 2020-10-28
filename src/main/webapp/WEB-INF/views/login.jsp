@@ -6,38 +6,30 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
-<head>
-    <title>Login</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
-            crossorigin="anonymous"></script>
-    <style>
-        .container{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    </style>
-</head>
-<body class="container">
-<form action="/signIn" method="post">
-    <div class="form-group">
-        <label for="login">Login:</label>
-        <input type="text" class="form-control" name="name" id="login" required aria-describedby="nameHelp"
-               placeholder="Enter name">
-        <small id="nameHelp" class="form-text text-muted">Enter please your name</small>
+<body>
+<c:if test="${not empty errorMessge}">
+    <div style="color:red; font-weight: bold; margin: 30px 0px;">
+            ${errorMessge}
     </div>
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" required class="form-control" name="password" id="password" placeholder="Password">
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+</c:if>
+<form name='login' action="<c:url value='/login'/>" method='POST'>
+    <table>
+        <tr>
+            <td>UserName:</td>
+            <td><input type='text' name='username'></td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+            <td><input type='password' name='password'/></td>
+        </tr>
+        <tr>
+            <td colspan='2'><input name="submit" type="submit" value="submit"/></td>
+        </tr>
+    </table>
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form>
+<a href="<c:url value='/reg'/>">Registration page</a>
 </body>
 </html>
