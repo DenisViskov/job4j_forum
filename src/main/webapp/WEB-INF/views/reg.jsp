@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: vda-it
@@ -26,7 +27,7 @@
     </style>
 </head>
 <body class="container">
-<form action="/createUser" method="post">
+<form name="login" action="<c:url value='/createUser'/>" method="POST">
     <div class="form-group">
         <label for="login">Login:</label>
         <input type="text" class="form-control" name="name" id="login" required aria-describedby="nameHelp"
@@ -41,7 +42,7 @@
         <label for="confirmPassword">Confirm Password</label>
         <input type="password" required class="form-control" id="confirmPassword" placeholder="Confirm">
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <input type="submit" class="btn btn-primary">Submit</input>
 </form>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package forum.config;
 
+import forum.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,29 +20,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
     @Autowired
-    PasswordEncoder passwordEncoder;
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .passwordEncoder(passwordEncoder)
-                .withUser("user").password(passwordEncoder.encode("123456")).roles("USER")
-                .and()
-                .withUser("admin").password(passwordEncoder.encode("123456")).roles("USER", "ADMIN");
-    }
+    UserService userService;
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/login")
+                .antMatchers("/login", "/reg", "/createUser")
                 .permitAll()
                 .antMatchers("/**")
-                .hasAnyRole("ADMIN", "USER")
+                .hasAnyRole("ROLE_ADMIN", "ROLE_USER")
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -56,5 +48,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf()
                 .disable();
+    }
+
+    @Autowired
+    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder());
     }
 }

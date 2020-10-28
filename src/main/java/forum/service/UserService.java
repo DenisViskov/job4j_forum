@@ -3,14 +3,12 @@ package forum.service;
 import forum.model.Role;
 import forum.model.User;
 import forum.persistance.RoleRepository;
-import forum.persistance.Store;
 import forum.persistance.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,10 +25,10 @@ import java.util.Optional;
 public class UserService implements RepositoryService<User>, UserDetailsService {
     private final UserRepository store;
     private final RoleRepository roleStore;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final PasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserService(UserRepository store, RoleRepository roleStore, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserService(UserRepository store, RoleRepository roleStore, PasswordEncoder bCryptPasswordEncoder) {
         this.store = store;
         this.roleStore = roleStore;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
@@ -57,12 +55,17 @@ public class UserService implements RepositoryService<User>, UserDetailsService 
 
     @Override
     public void update(User some) {
-        if(store.findById(some.getId()).isPresent())
-        store.save(some);
+        if (store.findById(some.getId()).isPresent()) {
+            store.save(some);
+        }
     }
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return null;
+        User user = store.findByName(s);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
+        return user;
     }
 }
