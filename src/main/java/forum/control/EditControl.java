@@ -33,7 +33,7 @@ public class EditControl {
     }
 
     @GetMapping("/update")
-    public String edit(@RequestParam("id") int id, Model model) {
+    public String update(@RequestParam("id") int id, Model model) {
         model.addAttribute("id", id);
         return "edit";
     }
