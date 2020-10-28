@@ -18,8 +18,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
             crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+            integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <style>
-        .container{
+        .container {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -27,7 +29,7 @@
     </style>
 </head>
 <body class="container">
-<form name="login" action="<c:url value='/createUser'/>" method="POST">
+<form id="form">
     <div class="form-group">
         <label for="login">Login:</label>
         <input type="text" class="form-control" name="name" id="login" required aria-describedby="nameHelp"
@@ -46,3 +48,35 @@
 </form>
 </body>
 </html>
+
+<script>
+    $('#form').submit(function (e) {
+        e.preventDefault()
+        if (validate()) {
+            const name = document.getElementById('login').value
+            const password = document.getElementById('password').value
+            $.ajax({
+                type: 'POST',
+                url: "<c:url value='/createUser'/>",
+                data: {
+                    name: name,
+                    password: password
+                },
+                success: function (data) {
+                    console.log('done');
+                    document.location.href = '/'
+                }
+            })
+        }
+    })
+
+    function validate() {
+        const password = document.getElementById('password').value
+        const confirm = document.getElementById('confirmPassword').value
+        if (password != confirm) {
+            alert('passwords not same')
+            return false
+        }
+        return true
+    }
+</script>
