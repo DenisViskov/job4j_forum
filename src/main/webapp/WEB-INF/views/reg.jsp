@@ -42,7 +42,7 @@
         <label for="confirmPassword">Confirm Password</label>
         <input type="password" required class="form-control" id="confirmPassword" placeholder="Confirm">
     </div>
-    <input type="submit" class="btn btn-primary">Submit</input>
+    <input type="submit" class="btn btn-primary"/>
 </form>
 </body>
 </html>

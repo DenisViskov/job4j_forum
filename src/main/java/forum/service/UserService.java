@@ -24,13 +24,11 @@ import java.util.Optional;
 @Service
 public class UserService implements RepositoryService<User>, UserDetailsService {
     private final UserRepository store;
-    private final RoleRepository roleStore;
     private final PasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserService(UserRepository store, RoleRepository roleStore, PasswordEncoder bCryptPasswordEncoder) {
+    public UserService(UserRepository store, PasswordEncoder bCryptPasswordEncoder) {
         this.store = store;
-        this.roleStore = roleStore;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
