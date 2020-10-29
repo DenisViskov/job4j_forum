@@ -23,7 +23,7 @@ public class RegControl {
     }
 
     @GetMapping("/reg")
-    public String reg(Model model) {
+    public String reg() {
         return "reg";
     }
 
