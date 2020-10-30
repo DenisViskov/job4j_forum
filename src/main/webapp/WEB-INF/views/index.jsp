@@ -14,6 +14,7 @@
     <title>Forum job4j</title>
 </head>
 <body>
+<a href="<c:url value='/edit'/>">Create new post</a>
 <div class="container mt-3">
     <div class="row">
         <h4>Forum</h4>
