@@ -1,23 +1,17 @@
-# используем язык java. Travis CI поддерживает другие языки тоже.
 language: java
-jdk:
-  - openjdk14
-
-# используем режим обычного пользователя для сборки проекта.
 sudo: false
-# после выполнения сборки запустить скрипт, который будет собирать статистику по JaCoCo
-# Здесь используется сторонни сервис https://codecov.io/
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
 
-# Отправлять уведомление на почтуyouremail@smtp.ru(Изменить на свою) если сборка упала
+install: true
+
+script: mvn clean package -DskipTests=true
+
 notifications:
   email:
-    recipients:
-      -DenisViskov16@gmail.com
+    recipients: "-DenisViskov16@gmail.com"
     on_success: never # default: change
     on_failure: always # default: always
-
-    env:
-      global:
-        CODECOV_TOKEN="06751fa2-5c9a-4a2b-9c22-0b64c33308ca"
+deploy:
+  provider: heroku
+  api_key:
+    secure: CVTeUXObPmdqrEv4Xr+lx0S3KJy+swJ3xazNHL3VllZE/u7AJnDnd0Dp67bcouXguGyyfQSj7i9EnS5m/vD4EqBfKZIxd06ukTR9v3Mrs4PVW4v6BMhgG14wuuy1zedKclMwD1LzhNJla2S8K/M3pvgFWomSSTEAkBAGGJIFJIO+cme/Gkrmd0popun1x2WF2YGP7p28z9YwWPpjNoJfHuFFNZBn2u1r6xKUFQbi5S8vkTZuJ6iAlZuF7Gj+CNPKNHvg5Gk9caw42ZAft2khZ4zIkK8Ij6Rh+pQxa9iy/F82efI8zuEIQtnx2hOoFsXBl7HtsD2OcTkckqzChK2J24Uf/6kfc0n3w6RcPAFN5Obqnt1rRO5wGPSDyTgdPR8M6fm0dLyJNHz09GkPC1cRICJvAGmMGNBp2okmrzEyHDOKN/pFV4DdyOYsIgcYQ9wvOEo1X/5jkBwpSN/fnumwO/EF7KKXLECHPcV23KoRb619vDf1PeMSC2XxsvH12UfZlhrEjneMy7UX6kAkwPnc/Lt87m+LM8A62Gsfl4sAAG8PcFqmaLiE2XVG+8Vk4yCCFOIUkG/MBtvUMbFhLUXW5fyAHi5Jy9c2lGfTaQNmmJ1Lbyn8/LTdobyw+YdfRpe29QTmY7TvlLaX6T+oxJIqrlL4WUzgevm5np1/7bswbsw=
+  app: guarded-eyrie-32450
