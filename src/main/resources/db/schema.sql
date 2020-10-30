@@ -4,3 +4,8 @@ create table posts (
   description text,
   created timestamp without time zone not null default now()
 );
+
+create table roles (
+  id integer primary key,
+  name varchar(255)
+);
