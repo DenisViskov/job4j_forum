@@ -6,6 +6,8 @@ import javax.persistence.*;
 import java.util.Set;
 
 /**
+ * Class is a role entity
+ *
  * @author Денис Висков
  * @version 1.0
  * @since 28.10.2020
@@ -13,10 +15,19 @@ import java.util.Set;
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
+    /**
+     * Id
+     */
     @Id
     private int id;
+    /**
+     * Name
+     */
     @Column(name = "name")
     private String name;
+    /**
+     * Users
+     */
     @Transient
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;

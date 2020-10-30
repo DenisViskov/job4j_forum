@@ -10,6 +10,8 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
+ * Class is a user entity
+ *
  * @author Денис Висков
  * @version 1.0
  * @since 26.10.2020
@@ -17,13 +19,25 @@ import java.util.Set;
 @Entity
 @Table(name = "usr")
 public class User implements UserDetails {
+    /**
+     * ID
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    /**
+     * Name
+     */
     @Column(name = "name")
     private String name;
+    /**
+     * Password
+     */
     @Column(name = "password")
     private String password;
+    /**
+     * Roles
+     */
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 

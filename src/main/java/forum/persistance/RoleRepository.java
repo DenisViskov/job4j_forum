@@ -4,7 +4,7 @@ import forum.model.Role;
 import org.springframework.data.repository.CrudRepository;
 
 /**
- * Интерфейс реализующий способность
+ * Interface of role repository
  *
  * @author Денис Висков
  * @version 1.0

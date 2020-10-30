@@ -7,6 +7,8 @@ import java.util.Calendar;
 import java.util.Objects;
 
 /**
+ * Class is a Post entity
+ *
  * @author Денис Висков
  * @version 1.0
  * @since 26.10.2020
@@ -14,13 +16,25 @@ import java.util.Objects;
 @Entity
 @Table(name = "posts")
 public class Post {
+    /**
+     * ID
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    /**
+     * Name
+     */
     @Column(name = "name")
     private String name;
+    /**
+     * Description
+     */
     @Column(name = "description")
     private String desc;
+    /**
+     * Created date
+     */
     @Column(name = "created")
     private Calendar created;
 

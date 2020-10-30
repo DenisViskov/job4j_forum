@@ -4,7 +4,7 @@ import forum.model.Post;
 import org.springframework.data.repository.CrudRepository;
 
 /**
- * Интерфейс реализующий способность
+ * Interface of post repository
  *
  * @author Денис Висков
  * @version 1.0

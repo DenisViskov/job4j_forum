@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Bean;
 import javax.sql.DataSource;
 
 /**
+ * Class is a Main runner App
+ *
  * @author Денис Висков
  * @version 1.0
  * @since 26.10.2020
