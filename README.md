@@ -8,4 +8,5 @@ Used technologies:<br>
 4.Maven as a build system<br>
 5.Front(jsp/js/bootstrap/CSS/Jquery)<br>
 6.CI/CD Travis<br>
+
 [![Build Status](https://travis-ci.org/DenisViskov/job4j_forum.svg?branch=master)](https://travis-ci.org/DenisViskov/job4j_forum)
